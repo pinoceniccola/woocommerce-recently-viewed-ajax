@@ -36,7 +36,7 @@
             }
 
             // Store for session only.
-            document.cookie = "woocommerce_recently_viewed="+_viewed_products.join('|')+";path=/";
+            document.cookie = "woocommerce_recently_viewed="+_viewed_products.join('|')+";path="+widgetPlaceholder.data('cookiepath');
         }
     }
 

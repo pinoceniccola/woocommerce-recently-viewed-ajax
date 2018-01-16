@@ -2,7 +2,7 @@
 /*
 Plugin Name: WooCommerce Recent Products Widget Via Ajax
 Description: Dinamically display the WooCommerce Recently Viewed Products widget via frontend/ajax, useful for caching purposes.
-Version: 0.1.0
+Version: 0.1.1
 Author: Pino Ceniccola
 Author URI: http://pino.ceniccola.it
 Copyright: © 2017 Pino Ceniccola
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 // remove WooCommerce built-in cookie tracker
-add_action( 'plugins_loaded', wpe_remove_product_view );
+add_action( 'plugins_loaded', 'wpe_remove_product_view' );
 
 function wpe_remove_product_view(){
     remove_action( 'template_redirect', 'wc_track_product_view', 20 );
@@ -80,7 +80,7 @@ function wpe_recent_widget_ajax_action() {
 
 
 add_action( 'wp_enqueue_scripts', function() {
-    wp_enqueue_script( 'recently-viewed', plugins_url('js/recentlyViewed.min.js', __FILE__), array('jquery'), '0.1.0', true );
+    wp_enqueue_script( 'recently-viewed', plugins_url('js/recentlyViewed.min.js', __FILE__), array('jquery'), '0.1.1', true );
 });
 
 
@@ -139,8 +139,9 @@ function wpe_extend_recently_viewed_widget() {
 
         $ajax_url = admin_url( 'admin-ajax.php' );
         $current = (is_product()) ? $product->get_id() : 0;
+        $cookiepath = (is_multisite()) ? get_blog_details()->path : COOKIEPATH;
 
-        $content = str_replace('id="woocommerce_recently_viewed','style="display:none !important" data-number="'.$number.'" data-ajaxurl="'.$ajax_url.'" data-current="'.$current.'" id="woocommerce_recently_viewed', $content);
+        $content = str_replace('id="woocommerce_recently_viewed','style="display:none !important" data-number="'.$number.'" data-ajaxurl="'.$ajax_url.'" data-cookiepath="'.$cookiepath.'" data-current="'.$current.'" id="woocommerce_recently_viewed', $content);
         echo $content;
     }
 	}
