@@ -6,7 +6,7 @@
 
 		// Since 0.2.0: Now we are tracking the current product by CSS Classes and DOM
 		//_current = (widgetPlaceholder.length) ? +widgetPlaceholder.data('current') : 0;
-		_current = $('body.single-product .product.type-product');
+		_current = $('body.single-product .product.type-product[id]');
 		_current = (_current.length) ? parseInt(_current[0].id.match(/(\d+)/)[0], 10) : 0;
 
 	if (recentlyViewed && widgetPlaceholder.length) {
